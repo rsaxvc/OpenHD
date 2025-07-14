@@ -26,6 +26,7 @@
 
 #include "MEndpoint.h"
 #include "openhd_link.hpp"
+#include "openhd_remoteid.h"
 
 // Abstraction for sending / receiving data on/from the link between air and
 // ground unit
@@ -37,6 +38,7 @@ class WBEndpoint : public MEndpoint {
  private:
   std::shared_ptr<OHDLink> m_link_handle;
   bool sendMessagesImpl(const std::vector<MavlinkMessage>& messages) override;
+  bool sendRemoteIdImpl(const RemoteIdPacket & message);
   std::mutex m_send_messages_mutex;
 };
 

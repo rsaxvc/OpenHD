@@ -39,6 +39,7 @@
 #include "openhd_link_statistics.hpp"
 #include "openhd_platform.h"
 #include "openhd_profile.h"
+#include "openhd_remoteid.h"
 #include "openhd_settings_imp.h"
 #include "openhd_spdlog.h"
 #include "openhd_util_time.h"
@@ -168,6 +169,7 @@ class WBLink : public OHDLink {
       int stream_index,
       const openhd::FragmentedVideoFrame& fragmented_video_frame) override;
   void transmit_audio_data(const openhd::AudioPacket& audio_packet) override;
+  void transmit_remoteid_data(const RemoteIdPacket& packet);
   // How often per second we broadcast the session key -
   // we send the session key ~2 times per second
   static constexpr std::chrono::milliseconds SESSION_KEY_PACKETS_INTERVAL =

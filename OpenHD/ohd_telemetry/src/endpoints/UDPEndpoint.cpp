@@ -66,6 +66,11 @@ bool UDPEndpoint::sendMessagesImpl(
   return true;
 }
 
+bool UDPEndpoint::sendRemoteIdImpl(
+    const RemoteIdPacket& message) {
+  return false;
+}
+
 void UDPEndpoint::addAnotherDestIpAddress(const std::string& ip) {
   std::lock_guard<std::mutex> lock(m_sender_mutex);
   m_console->debug("addAnotherDestIpAddress {}", ip);

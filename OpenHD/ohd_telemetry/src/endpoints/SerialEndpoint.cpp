@@ -91,6 +91,11 @@ bool SerialEndpoint::sendMessagesImpl(
   return success;
 }
 
+bool SerialEndpoint::sendRemoteIdImpl(
+    const RemoteIdPacket& message) {
+  return false;
+}
+
 bool SerialEndpoint::write_data_serial(const std::vector<uint8_t>& data) {
   // m_console->debug("Write data serial:{} bytes",data.size());
   if (m_fd == -1) {

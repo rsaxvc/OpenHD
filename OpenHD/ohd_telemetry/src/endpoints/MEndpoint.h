@@ -33,6 +33,7 @@
 
 #include "../mav_helper.h"
 #include "../mav_include.h"
+#include "openhd_remoteid.h"
 #include "openhd_spdlog.h"
 
 // Mavlink Endpoint
@@ -70,6 +71,14 @@ class MEndpoint {
    */
   void sendMessages(const std::vector<MavlinkMessage>& messages);
   /**
+   * send one RemoteID packet via this endpoint.
+   * If the endpoint is silently disconnected, this MUST NOT FAIL/CRASH.
+   * This calls the underlying implementation's sendMessageImpl() function (pure
+   * virtual) and increases the sent message count
+   * @param messages the messages to send
+   */
+  void sendRemoteId(const RemoteIdPacket& message);
+  /**
    * register a callback that is called every time
    * this endpoint has received a new message
    * @param cb the callback function to register that is then called with a
@@ -102,6 +111,11 @@ class MEndpoint {
   // exists on connection-based endpoints) false otherwise
   virtual bool sendMessagesImpl(
       const std::vector<MavlinkMessage>& messages) = 0;
+  // Must be overridden by the implementation
+  // Returns true if the message(s) have been properly sent (e.g. a connection
+  // exists on connection-based endpoints) false otherwise
+  virtual bool sendRemoteIdImpl(
+      const RemoteIdPacket& message) = 0;
 
  private:
   MAV_MSG_CALLBACK m_callback = nullptr;

@@ -45,6 +45,11 @@ bool TCPEndpoint::sendMessagesImpl(
   return true;
 }
 
+bool TCPEndpoint::sendRemoteIdImpl(
+    const RemoteIdPacket& message) {
+  return false;
+}
+
 void TCPEndpoint::on_external_device(std::string ip, int port, bool connected) {
   auto external_device = openhd::ExternalDevice{"MAV TCP CLIENT", ip, true};
   openhd::ExternalDeviceManager::instance().on_new_external_device(

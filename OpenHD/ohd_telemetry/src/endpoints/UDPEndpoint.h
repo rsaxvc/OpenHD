@@ -54,6 +54,7 @@ class UDPEndpoint : public MEndpoint {
  private:
   std::shared_ptr<spdlog::logger> m_console;
   bool sendMessagesImpl(const std::vector<MavlinkMessage>& messages) override;
+  bool sendRemoteIdImpl(const RemoteIdPacket& message) override;
   const std::string SENDER_IP;
   const int SEND_PORT;
   const std::string RECV_IP;

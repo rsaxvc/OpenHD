@@ -494,6 +494,12 @@ void MicrohardLink::transmit_audio_data(
   openhd::log::get_default()->warn("Transmitting audio data (not implemented)");
 }
 
+void MicrohardLink::transmit_remoteid_data(
+    const RemoteIdPacket &packet) {
+  // not impl
+}
+
+
 std::vector<openhd::Setting> MicrohardLink::get_all_settings() {
   using namespace openhd;
   std::vector<Setting> settings;

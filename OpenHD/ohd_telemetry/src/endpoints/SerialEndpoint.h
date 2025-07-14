@@ -86,6 +86,7 @@ class SerialEndpoint : public MEndpoint {
  private:
   bool uart_log_warning_once = false;
   bool sendMessagesImpl(const std::vector<MavlinkMessage>& messages) override;
+  bool sendRemoteIdImpl(const RemoteIdPacket& message) override;
   static int define_from_baudrate(int baudrate);
   static int setup_port(const HWOptions& options,
                         std::shared_ptr<spdlog::logger> m_console);

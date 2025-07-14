@@ -109,6 +109,20 @@ std::vector<MavlinkMessage> OHDMainComponent::process_mavlink_messages(
           m_last_known_position->on_new_position(lat, lon, alt);
         }
       } break;
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_LOCATION:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_AUTHENTICATION:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_SELF_ID:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_OPERATOR_ID:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_MESSAGE_PACK:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_ARM_STATUS:
+      case MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM_UPDATE: {
+        auto response = handle_remoteid_message(msg);
+        if (response.has_value()) {
+          ret.push_back(response.value());
+        }
+      } break;
       default:
         break;
     }
@@ -233,6 +247,12 @@ MavlinkMessage OHDMainComponent::ack_command(const uint8_t source_sys_id,
   mavlink_msg_command_ack_pack(m_sys_id, m_comp_id, &ret.m, command_id, result,
                                255, 0, source_sys_id, source_comp_id);
   return ret;
+}
+
+std::optional<MavlinkMessage> OHDMainComponent::handle_remoteid_message(
+    const MavlinkMessage& message) {
+  m_console->debug("Got RemoteID message");
+  return std::nullopt;
 }
 
 std::optional<MavlinkMessage> OHDMainComponent::handle_timesync_message(

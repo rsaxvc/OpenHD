@@ -54,6 +54,10 @@ void MEndpoint::sendMessages(const std::vector<MavlinkMessage>& messages) {
   }
 }
 
+void MEndpoint::sendRemoteId(const RemoteIdPacket& message) {
+  sendRemoteIdImpl(message);
+}
+
 void MEndpoint::registerCallback(MAV_MSG_CALLBACK cb) {
   if (m_callback != nullptr) {
     // this might be a common programming mistake - you can only register one

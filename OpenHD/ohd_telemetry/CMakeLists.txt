@@ -26,6 +26,8 @@ else()
     message(STATUS "SDL Features (Joystick) will be unavailable!")
 endif()
 
+target_include_directories(OHDTelemetryLib PRIVATE src/libopendroneid/)
+
 SET(sources
     "src/endpoints/MEndpoint.cpp"
     "src/endpoints/MEndpoint.h"
@@ -74,7 +76,15 @@ SET(sources
     "src/mavsdk_temporary/sender_wrapper.h"
     "src/mavsdk_temporary/XMavlinkParamProvider.cpp"
     "src/mavsdk_temporary/XMavlinkParamProvider.h"
-    
+
+    "src/libopendroneid/odid_wifi.h"
+    "src/libopendroneid/opendroneid.c"
+    "src/libopendroneid/opendroneid.h"
+    "src/libopendroneid/wifi.c"
+    "src/libmav2odid/mav2odid.c"
+    "src/libmav2odid/mav2odid.h"
+    "src/RemoteID.cpp"
+
     "src/rc/JoystickReader.cpp"
     "src/rc/JoystickReader.h"
     "src/rc/RcJoystickSender.cpp"
@@ -148,6 +158,9 @@ target_link_libraries(test_onboard_computer_status_read_stuff OHDTelemetryLib)
 
 add_executable(test_joystick_reader test/test_joystick_reader.cpp)
 target_link_libraries(test_joystick_reader OHDTelemetryLib)
+
+add_executable(test_remoteid test/test_remoteid.cpp)
+target_link_libraries(test_remoteid OHDTelemetryLib)
 
 ####
 # NOTE: We do not need MAVSDK for OpenHD, the small amount of code we share is directly included

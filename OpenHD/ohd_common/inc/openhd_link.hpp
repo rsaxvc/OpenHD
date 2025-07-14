@@ -28,6 +28,7 @@
 #include <utility>
 
 #include "openhd_profile.h"
+#include "openhd_remoteid.h"
 #include "openhd_spdlog.h"
 #include "openhd_spdlog_include.h"
 #include "openhd_video_frame.h"
@@ -138,6 +139,12 @@ class OHDLink {
       m_audio_data_rx_cb(data, data_len);
     }
   }
+
+  // --- RemoteID send --------
+  /**
+   * valid on only air unit
+   */
+  virtual void transmit_remoteid_data(const RemoteIdPacket& packet) = 0;
 };
 
 class DummyDebugLink : public OHDLink {
@@ -169,6 +176,9 @@ class DummyDebugLink : public OHDLink {
   }
   void transmit_audio_data(const openhd::AudioPacket& audio_packet) override {
     m_console_audio->debug("Got audio data {}", audio_packet.data->size());
+  }
+  void transmit_remoteid_data(const RemoteIdPacket& remoteid_packet) override {
+    m_console_audio->debug("Got RemoteID data {}", remoteid_packet.data->size());
   }
 
  private:

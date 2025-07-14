@@ -1320,6 +1320,14 @@ void WBLink::transmit_audio_data(const openhd::AudioPacket& audio_packet) {
   }
 }
 
+void WBLink::transmit_remoteid_data(const RemoteIdPacket& packet) {
+  const auto n_dropped =
+      m_wb_tele_tx->enqueue_packet_dropping(packet.data, 1);
+  if (n_dropped > 0) {
+    m_console->debug("RemoteID queue jam, dropped {}", n_dropped);
+  }
+}
+
 void WBLink::reset_all_rx_stats() {
   m_wb_txrx->rx_reset_stats();
   for (auto& rx : m_wb_video_rx_list) {

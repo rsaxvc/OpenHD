@@ -60,3 +60,11 @@ bool WBEndpoint::sendMessagesImpl(const std::vector<MavlinkMessage>& messages) {
   }
   return true;
 }
+
+bool WBEndpoint::sendRemoteIdImpl(const RemoteIdPacket & rip) {
+  if (m_link_handle) {
+    std::lock_guard<std::mutex> guard(m_send_messages_mutex);
+    m_link_handle->transmit_remoteid_data(rip);
+  }
+  return true;
+}

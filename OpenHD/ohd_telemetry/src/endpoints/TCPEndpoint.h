@@ -37,6 +37,7 @@ class TCPEndpoint : public MEndpoint, openhd::TCPServer {
 
  private:
   bool sendMessagesImpl(const std::vector<MavlinkMessage>& messages) override;
+  bool sendRemoteIdImpl(const RemoteIdPacket& message) override;
   std::mutex m_rx_parse_mutex;
   void on_external_device(std::string ip, int port, bool connected) override;
   void on_packet_any_tcp_client(const uint8_t* data, int data_len) override;

@@ -25,6 +25,7 @@
 #define OPENHD_MICROHARD_LINK_H
 
 #include "openhd_link.hpp"
+#include "openhd_remoteid.h"
 #include "openhd_settings_imp.h"
 #include "openhd_udp.h"
 
@@ -39,6 +40,8 @@ class MicrohardLink : public OHDLink {
       int stream_index,
       const openhd::FragmentedVideoFrame& fragmented_video_frame) override;
   void transmit_audio_data(const openhd::AudioPacket& audio_packet) override;
+  void transmit_remoteid_data(const RemoteIdPacket& packet) override;
+
   /**
    * @return all mavlink settings, values might change depending on air/ground
    * and/or the used hardware

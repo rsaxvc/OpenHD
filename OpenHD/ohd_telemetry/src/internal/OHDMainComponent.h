@@ -70,6 +70,8 @@ class OHDMainComponent : public MavlinkComponent {
   // Some features rely on (RC) channel switches, like changing the mcs index
   void check_fc_messages_for_actions(
       const std::vector<MavlinkMessage>& messages);
+  std::optional<MavlinkMessage> handle_remoteid_message(
+      const MavlinkMessage& message);
   std::optional<MavlinkMessage> handle_timesync_message(
       const MavlinkMessage& message);
 
